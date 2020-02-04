@@ -16,7 +16,10 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <maven.compiler.source>1.7</maven.compiler.source>
     <maven.compiler.target>1.7</maven.compiler.target>
+    <cucumber.version>5.1.3</cucumber.version>    
   </properties>
+
+
 
   <dependencies>
     <dependency>
@@ -37,6 +40,13 @@
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
         <version>7.1.0</version>
+        <scope>test</scope>
+    </dependency>
+
+    <dependency>
+        <groupId>io.cucumber</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>5.1.3</version>
         <scope>test</scope>
     </dependency>
 
@@ -96,13 +106,6 @@
                     <argument>argument1</argument>
                 </arguments>
             </configuration>
-        </plugin>
-
-
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>3.0.0-M4</version>
         </plugin>
 
       </plugins>
