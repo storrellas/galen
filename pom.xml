@@ -32,6 +32,15 @@
         <version>3.141.59</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/org.testng/testng -->
+    <dependency>
+        <groupId>org.testng</groupId>
+        <artifactId>testng</artifactId>
+        <version>7.1.0</version>
+        <scope>test</scope>
+    </dependency>
+
+
   </dependencies>
 
   <build>
@@ -77,17 +86,24 @@
           <version>3.0.0</version>
         </plugin>
 
-          <plugin>
-              <groupId>org.codehaus.mojo</groupId>
-              <artifactId>exec-maven-plugin</artifactId>
-              <version>1.2.1</version>
-              <configuration>
-                  <mainClass>com.galen.app.App</mainClass>
-                  <arguments>
-                      <argument>argument1</argument>
-                  </arguments>
-              </configuration>
-          </plugin>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>exec-maven-plugin</artifactId>
+            <version>1.2.1</version>
+            <configuration>
+                <mainClass>com.galen.app.App</mainClass>
+                <arguments>
+                    <argument>argument1</argument>
+                </arguments>
+            </configuration>
+        </plugin>
+
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>3.0.0-M4</version>
+        </plugin>
 
       </plugins>
     </pluginManagement>
