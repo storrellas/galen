@@ -38,7 +38,7 @@ public class AppNGTest {
     public void googleSearch(){
 
         System.out.println("TEST1 ----> Im already runing TestNG Test!!!");
-
+/*
         try {
             // System.out.println( "Hello World!" );
 
@@ -61,6 +61,6 @@ public class AppNGTest {
             e.printStackTrace();
             
         }
-
+/**/
     }
 }
