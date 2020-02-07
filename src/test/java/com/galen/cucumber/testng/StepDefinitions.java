@@ -1,5 +1,8 @@
 package cucumbertest.testng;
- 
+
+// TestNG
+import org.testng.annotations.AfterMethod;
+
 // Cucumber imports
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
@@ -13,9 +16,26 @@ import org.openqa.selenium.*;
 import org.testng.Assert;
 import org.testng.annotations.*;
 
-public class StepDefinitions {
+// Galen imports
+import com.galenframework.api.Galen;
+import com.galenframework.reports.GalenTestInfo;
+import com.galenframework.reports.HtmlReportBuilder;
+import com.galenframework.reports.model.LayoutReport;
 
-  WebDriver driver;
+// Java import
+import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
+
+public class StepDefinitions {
+  // Selenium
+  private static WebDriver driver;
+
+  // Galen
+  private static final String mainSpec = "src/test/resources/main.spec";
+  private LayoutReport layoutReport;
+
+
 
   @Given("Go to Google Web Search")
   public void go_to_google(){
@@ -56,12 +76,45 @@ public class StepDefinitions {
     //throw new io.cucumber.java.PendingException();
 
     try {
+
+        //Executing Layout check and obtaining the Layout report
+        this.layoutReport = Galen.checkLayout(driver, mainSpec, Arrays.asList("desktop"));
+
+
+            //Creating a list of tests
+            List<GalenTestInfo> tests = new LinkedList<>();
+            //The object you create will be consisting the information regarding the test
+            GalenTestInfo test = GalenTestInfo.fromString("Test Automation Using Galen Framework");
+            //Adding layout report to the test report
+            test.getReport().layout(layoutReport, "Verify logo present and log image comparison");
+            tests.add(test);
+            //Exporting all test report to html
+            new HtmlReportBuilder().build(tests, "target/galen-html-reports");
+
         driver.quit();
     } catch (Exception e) {
         System.out.println("exception has occurred");
         e.printStackTrace();
         
     }
+  }
+
+  
+  @AfterMethod
+  public void reportUpdate() {
+      try {
+          //Creating a list of tests
+          List<GalenTestInfo> tests = new LinkedList<>();
+          //The object you create will be consisting the information regarding the test
+          GalenTestInfo test = GalenTestInfo.fromString("Test Automation Using Galen Framework");
+          //Adding layout report to the test report
+          test.getReport().layout(layoutReport, "Verify logo present and log image comparison");
+          tests.add(test);
+          //Exporting all test report to html
+          new HtmlReportBuilder().build(tests, "target/galen-html-reports");
+      } catch (Exception e) {
+          e.printStackTrace();
+      }
   }
 
   /*
