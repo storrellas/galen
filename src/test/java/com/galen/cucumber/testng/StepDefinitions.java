@@ -1,36 +1,69 @@
 package cucumbertest.testng;
  
+// Cucumber imports
 import io.cucumber.java.PendingException;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
- 
+
+// Selenium imports
+import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.*;
+import org.testng.Assert;
+import org.testng.annotations.*;
 
 public class StepDefinitions {
 
-  @Given("Given today is Sunday")
-  public void today_is_sunday(){
-    System.out.println("Today is sunday");
+  WebDriver driver;
+
+  @Given("Go to Google Web Search")
+  public void go_to_google(){
+    System.out.println("go to google");
+
+    try {
+      // Optional. If not specified, WebDriver searches the PATH for chromedriver.
+      System.setProperty("webdriver.chrome.driver", "D:/Sopra/04.Downloads/chromedriver_win32_79/chromedriver.exe");
+      this.driver = new ChromeDriver();
+      driver.get("http://www.google.com/");
+    } catch (Exception e) {
+      System.out.println("exception has occurred");
+      e.printStackTrace();  
+    }
+
   }
 
-  @Given("today is Sunday")
-  public void today_is_Sunday() {
+  @When("I say a word {string}")
+  public void i_say_a_word(String string) {
       // Write code here that turns the phrase above into concrete actions
-      System.out.println("Today is sunday");
+      System.out.println("I say a word" + string);
+
+      try {
+        WebElement searchBox = driver.findElement(By.name("q"));
+        searchBox.sendKeys("ChromeDriver"); 
+        searchBox.submit();
+        Thread.sleep(5000); // Let the user actually see something!
+      } catch (Exception e) {
+        System.out.println("exception has occurred");
+        e.printStackTrace();  
+      }
   }
 
-  @When("I ask whether it's Friday yet")
-  public void i_ask_whether_it_s_Friday_yet() {
-      // Write code here that turns the phrase above into concrete actions
-      System.out.println("I ask whether it's Friday yet");
+  @Then("I should be getting {string} results")
+  public void i_should_be_getting_results(String string) {
+    // Write code here that turns the phrase above into concrete actions
+    System.out.println("I should be getting " + string + " results");
+    //throw new io.cucumber.java.PendingException();
+
+    try {
+        driver.quit();
+    } catch (Exception e) {
+        System.out.println("exception has occurred");
+        e.printStackTrace();
+        
+    }
   }
 
-  @Then("I should be told {string}")
-  public void i_should_be_told(String string) {
-      // Write code here that turns the phrase above into concrete actions
-      System.out.println("I should be told");
-      //throw new io.cucumber.java.PendingException();
-  }
   /*
     @Given("^I am on the \"([^\"]*)\" page on URL \"([^\"]*)\"$")
     public void i_am_on_the_page_on_URL(String arg1, String arg2) throws Throwable {
